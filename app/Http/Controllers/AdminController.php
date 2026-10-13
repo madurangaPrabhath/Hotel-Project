@@ -14,7 +14,7 @@ class AdminController extends Controller
     {
         if(Auth::id())
         {
-            $usertype = Auth()->user()->usertype;
+            $usertype = Auth::user()->usertype;
 
             if ($usertype == 'user') 
             {
@@ -29,5 +29,10 @@ class AdminController extends Controller
         {
             return redirect()->back();
         }
+    }
+
+    public function home()
+    {
+        return view('home');
     }
 }
