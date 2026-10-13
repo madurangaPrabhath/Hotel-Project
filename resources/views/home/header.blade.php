@@ -36,6 +36,12 @@
                      <li class="nav-item">
                         <a class="nav-link" href="contact.html">Contact Us</a>
                      </li>
+                     <li class="nav-item">
+                        <a class="nav-link nav-auth nav-login" href="{{ route('login') }}">Login</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link nav-auth nav-register" href="{{ route('register') }}">Register</a>
+                     </li>
                   </ul>
                </div>
             </nav>
