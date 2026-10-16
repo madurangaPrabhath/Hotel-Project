@@ -8,6 +8,8 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Room;
+
 class AdminController extends Controller
 {
     public function index()
@@ -39,5 +41,29 @@ class AdminController extends Controller
     public function create_room()
     {
         return view('admin.create_room');
+    }
+
+    public function add_room(Request $request)
+    {
+        $room = new Room();
+
+        $room->room_title = $request->input('room_title');
+        $room->description = $request->input('description');
+        $room->price = $request->input('price');
+        $room->wifi = $request->input('wifi');
+        $room->room_type = $request->input('room_type');
+
+        if ($request->hasFile('image')) 
+        {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $filePath = 'uploads/rooms/' . $filename;
+            $file->move(public_path('uploads/rooms'), $filename);
+            $room->image = $filePath;
+        }
+
+        $room->save();
+
+        return redirect()->back()->with('success', 'Room added successfully.');
     }
 }
