@@ -57,7 +57,11 @@
 
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="font-weight-bold">${{ $room->price }}</span>
-                                            <a href="{{ url('create_room') }}" class="btn btn-sm btn-primary">Add Room</a>
+                                            <form action="{{ route('delete_room', $room->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this room?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
                                         </div>
                                     </div>
                                 </div>
