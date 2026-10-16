@@ -62,6 +62,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
+                            <a href="{{ route('edit_room', $room->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                         </div>
                                     </div>
                                 </div>
