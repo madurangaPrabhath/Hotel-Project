@@ -22,7 +22,6 @@
                         <div class="block">
                             <form method="POST" action="{{ route('edit_room', $room->id) }}" enctype="multipart/form-data">
                                 @csrf
-                                @method('POST')
 
                                 <div class="form-group">
                                     <label for="room_title">Room Title</label>
