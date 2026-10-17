@@ -16,6 +16,4 @@ Route::get('/view_room', [AdminController::class, 'view_room'])->name('view_room
 
 Route::delete('/delete_room/{id}', [AdminController::class, 'delete_room'])->name('delete_room');
 
-Route::get('/edit_room/{id}', [AdminController::class, 'edit_room'])->name('edit_room');
-
-Route::put('/update_room/{id}', [AdminController::class, 'update_room'])->name('update_room');
+Route::match(['GET', 'POST'], '/edit_room/{id}', [AdminController::class, 'edit_room'])->name('edit_room');
