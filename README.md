@@ -23,7 +23,7 @@ A hotel management system built with **Laravel 12** and **Laravel Jetstream (Liv
 - **User roles foundation** — `usertype` column on users (defaults to `user`) for future role-based access (e.g. admin vs. guest).
 - **Profile management** — update profile information, change password, log out of other browser sessions, and delete the account.
 - **Two-factor authentication** — enable 2FA via an authenticator app, with recovery codes and a confirmation challenge at login.
-- **Dashboard** — authenticated landing page at `/dashboard`.
+- **Dashboard** — authenticated landing page at `/home`.
 - **Security hardening** — Sanctum token support, hashed passwords, and Jetstream session protection.
 
 ## Requirements
@@ -128,7 +128,7 @@ Hotel-Project/
 ├── resources/
 │   └── views/                # Blade templates (auth, profile, dashboard, components)
 ├── routes/
-│   ├── web.php               # "/" welcome & "/dashboard" (auth-protected)
+│   ├── web.php               # "/" welcome & "/home" (auth-protected)
 │   └── api.php
 └── tests/                    # PHPUnit tests
 ```
