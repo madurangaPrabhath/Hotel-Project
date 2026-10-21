@@ -89,48 +89,4 @@ class AdminController extends Controller
 
         return redirect()->back()->with('error', 'Room not found.');
     }
-
-    public function edit_room(Request $request, int $id)
-    {
-        $room = Room::find($id);
-
-        if (!$room) {
-            return redirect()->back()->with('error', 'Room not found.');
-        }
-
-        if ($request->isMethod('post')) {
-            $validated = $request->validate([
-                'room_title' => 'required|string|max:255',
-                'description' => 'required|string',
-                'price' => 'required|numeric|min:0',
-                'wifi' => 'required|in:yes,no',
-                'room_type' => 'required|in:regular,premium,deluxe',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
-
-            $room->room_title = $validated['room_title'];
-            $room->description = $validated['description'];
-            $room->price = $validated['price'];
-            $room->wifi = $validated['wifi'];
-            $room->room_type = $validated['room_type'];
-
-            if ($request->hasFile('image')) {
-                if ($room->image && file_exists(public_path($room->image))) {
-                    unlink(public_path($room->image));
-                }
-
-                $file = $request->file('image');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $filePath = 'uploads/rooms/' . $filename;
-                $file->move(public_path('uploads/rooms'), $filename);
-                $room->image = $filePath;
-            }
-
-            $room->save();
-
-            return redirect()->route('view_room')->with('success', 'Room updated successfully.');
-        }
-
-        return view('admin.edit_room', compact('room'));
-    }
 }
