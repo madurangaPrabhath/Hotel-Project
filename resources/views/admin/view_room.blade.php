@@ -62,6 +62,17 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
+                            <a href="#" class="btn btn-sm btn-warning ml-2 edit-room-btn"
+                                data-toggle="modal"
+                                data-target="#editRoomModal"
+                                data-action="{{ route('update_room', $room->id) }}"
+                                data-id="{{ $room->id }}"
+                                data-title="{{ $room->room_title }}"
+                                data-description="{{ $room->description }}"
+                                data-price="{{ $room->price }}"
+                                data-room-type="{{ $room->room_type }}"
+                                data-wifi="{{ $room->wifi }}"
+                                data-image="{{ $room->image ? asset($room->image) : '' }}">Edit</a>
                         </div>
                                     </div>
                                 </div>
@@ -81,7 +92,173 @@
         </section>
     </div>
 
+    <!-- Edit Room Modal -->
+    <div class="modal fade" id="editRoomModal" tabindex="-1" role="dialog" aria-labelledby="editRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editRoomModalLabel">Edit Room</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" id="editRoomForm" action="" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="edit_room_title">Room Title</label>
+                            <input type="text" name="room_title" id="edit_room_title" class="form-control" required>
+                            @error('room_title')
+                            <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_description">Description</label>
+                            <textarea name="description" id="edit_description" class="form-control" rows="3"></textarea>
+                            @error('description')
+                            <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_price">Price</label>
+                            <input type="number" name="price" id="edit_price" class="form-control" step="0.01" min="0" required>
+                            @error('price')
+                            <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_room_type">Room Type</label>
+                            <select name="room_type" id="edit_room_type" class="form-control" required>
+                                <option value="">-- Select Room Type --</option>
+                                <option value="regular">Regular</option>
+                                <option value="premium">Premium</option>
+                                <option value="deluxe">Deluxe</option>
+                            </select>
+                            @error('room_type')
+                            <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Free Wifi</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="wifi" id="edit_wifi_yes" value="yes">
+                                <label class="form-check-label" for="edit_wifi_yes">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="wifi" id="edit_wifi_no" value="no">
+                                <label class="form-check-label" for="edit_wifi_no">No</label>
+                            </div>
+                            @error('wifi')
+                            <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <label for="edit_image">Upload Image</label>
+                            <input type="file" name="image" id="edit_image" class="form-control-file">
+                            <div class="mt-2" id="editImagePreviewWrap" style="display: none;">
+                                <img id="editImagePreview" alt="Current image"
+                                    style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 4px;">
+                                <p class="text-muted small mt-1">Current image</p>
+                            </div>
+                            @error('image')
+                            <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Room</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     @include('admin.footer')
+
+    {{-- Server-rendered values for the edit modal, kept out of the script block --}}
+    @php($editRoomErrorId = session('edit_room_id'))
+    @php($editRoomError = $editRoomErrorId ? $rooms->firstWhere('id', (int) $editRoomErrorId) : null)
+    <div id="editRoomDefaults"
+        data-has-errors="{{ $errors->any() ? '1' : '0' }}"
+        data-error-action="{{ $editRoomErrorId ? url('update_room') . '/' . $editRoomErrorId : '' }}"
+        data-old-title="{{ old('room_title') }}"
+        data-old-description="{{ old('description') }}"
+        data-old-price="{{ old('price') }}"
+        data-old-room-type="{{ old('room_type') }}"
+        data-old-wifi="{{ old('wifi') }}"
+        data-error-image="{{ $editRoomError && $editRoomError->image ? asset($editRoomError->image) : '' }}"></div>
+
+    <script>
+        $(function () {
+            var $defaults = $('#editRoomDefaults');
+
+            // Populate the modal with the clicked room's data
+            $(document).on('click', '.edit-room-btn', function () {
+                var $btn = $(this);
+
+                $('#editRoomForm').attr('action', $btn.data('action'));
+
+                $('#edit_room_title').val($btn.data('title'));
+                $('#edit_description').val($btn.data('description'));
+                $('#edit_price').val($btn.data('price'));
+                $('#edit_room_type').val($btn.data('room-type'));
+
+                var wifi = $btn.data('wifi');
+                $('#edit_wifi_yes').prop('checked', wifi === 'yes');
+                $('#edit_wifi_no').prop('checked', wifi === 'no');
+
+                var image = $btn.data('image');
+                if (image) {
+                    $('#editImagePreview').attr('src', image);
+                    $('#editImagePreviewWrap').show();
+                } else {
+                    $('#editImagePreview').removeAttr('src');
+                    $('#editImagePreviewWrap').hide();
+                }
+
+                $('#edit_image').val('');
+            });
+
+            // Reset the file input each time the modal is hidden
+            $('#editRoomModal').on('hidden.bs.modal', function () {
+                $('#edit_image').val('');
+            });
+
+            // Re-open the modal with the submitted values when validation fails
+            if ($defaults.data('has-errors') === '1') {
+                var errorAction = $defaults.attr('data-error-action');
+                if (errorAction) {
+                    $('#editRoomForm').attr('action', errorAction);
+                }
+
+                $('#edit_room_title').val($defaults.attr('data-old-title'));
+                $('#edit_description').val($defaults.attr('data-old-description'));
+                $('#edit_price').val($defaults.attr('data-old-price'));
+                $('#edit_room_type').val($defaults.attr('data-old-room-type'));
+
+                var oldWifi = $defaults.attr('data-old-wifi');
+                $('#edit_wifi_yes').prop('checked', oldWifi === 'yes');
+                $('#edit_wifi_no').prop('checked', oldWifi === 'no');
+
+                var errorImage = $defaults.attr('data-error-image');
+                if (errorImage) {
+                    $('#editImagePreview').attr('src', errorImage);
+                    $('#editImagePreviewWrap').show();
+                } else {
+                    $('#editImagePreview').removeAttr('src');
+                    $('#editImagePreviewWrap').hide();
+                }
+
+                $('#editRoomModal').modal('show');
+            }
+        });
+    </script>
 </body>
 
 </html>
