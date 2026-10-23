@@ -16,28 +16,23 @@ class AdminController extends Controller
 {
     public function index()
     {
-        if(Auth::id())
-        {
+        if (Auth::id()) {
             $usertype = Auth::user()->usertype;
 
-            if ($usertype == 'user') 
-            {
+            if ($usertype == 'user') {
                 return view('home.index');
-            }
-            elseif ($usertype == 'admin')
-            {
+            } elseif ($usertype == 'admin') {
                 return view('admin.index');
             }
-        }
-        else
-        {
+        } else {
             return redirect()->back();
         }
     }
 
     public function home()
     {
-        return view('home.index');
+        $room = Room::all();
+        return view('home.index', compact('room'));
     }
 
     public function create_room()
@@ -55,8 +50,7 @@ class AdminController extends Controller
         $room->wifi = $request->input('wifi');
         $room->room_type = $request->input('room_type');
 
-        if ($request->hasFile('image')) 
-        {
+        if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = time() . '_' . $file->getClientOriginalName();
             $filePath = 'uploads/rooms/' . $filename;
