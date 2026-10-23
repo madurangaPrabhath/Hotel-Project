@@ -143,13 +143,11 @@
 
                 <!-- Log out               -->
                 <div class="list-inline-item logout">
-                    <form method="POST" action="{{ route('logout') }}" x-data>
+                    <form method="POST" action="{{ route('logout') }}">
                         @csrf
-
-                        <x-dropdown-link href="{{ route('logout') }}"
-                            @click.prevent="$root.submit();">
+                        <button type="submit" class="nav-link btn btn-link p-0 text-decoration-none">
                             {{ __('Log Out') }}
-                        </x-dropdown-link>
+                        </button>
                     </form>
                 </div>
             </div>

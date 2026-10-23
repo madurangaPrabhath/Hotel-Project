@@ -92,7 +92,6 @@
         </section>
     </div>
 
-    <!-- Edit Room Modal -->
     <div class="modal fade" id="editRoomModal" tabindex="-1" role="dialog" aria-labelledby="editRoomModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -198,7 +197,6 @@
         $(function () {
             var $defaults = $('#editRoomDefaults');
 
-            // Populate the modal with the clicked room's data
             $(document).on('click', '.edit-room-btn', function () {
                 var $btn = $(this);
 
@@ -225,12 +223,10 @@
                 $('#edit_image').val('');
             });
 
-            // Reset the file input each time the modal is hidden
             $('#editRoomModal').on('hidden.bs.modal', function () {
                 $('#edit_image').val('');
             });
 
-            // Re-open the modal with the submitted values when validation fails
             if ($defaults.data('has-errors') === '1') {
                 var errorAction = $defaults.attr('data-error-action');
                 if (errorAction) {
