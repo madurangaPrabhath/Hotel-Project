@@ -17,8 +17,8 @@
                     </div>
                     <div class="bed_room">
                         <h3>{{ $r->room_title }}</h3>
-                        <p>{{ $r->description }}</p>
-                        <p>Price: ${{ $r->price }} | Wifi: {{ $r->wifi }} | Type: {{ $r->room_type }}</p>
+                        <p>{{ \Illuminate\Support\Str::limit($r->description, 80) }}</p>
+                        <a href="#" class="btn btn-primary">Room Details</a>
                     </div>
                 </div>
             </div>
