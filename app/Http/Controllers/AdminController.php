@@ -20,7 +20,8 @@ class AdminController extends Controller
             $usertype = Auth::user()->usertype;
 
             if ($usertype == 'user') {
-                return view('home.index');
+                $room = Room::all();
+                return view('home.index', compact('room'));
             } elseif ($usertype == 'admin') {
                 return view('admin.index');
             }
