@@ -979,3 +979,151 @@ line-height: 35px;
 
 
 
+
+/*--------------------------------------------------------------------- Room Details Page ---------------------------------------------------------------------*/
+
+.room_details_section {
+     padding: 80px 0 60px 0;
+     background-color: #ffffff;
+}
+
+.room_details_section .titlepage {
+     text-align: center;
+     margin-bottom: 40px;
+}
+
+.room_details_section .titlepage h2 {
+     color: #111111;
+     font-size: 36px;
+     font-weight: 700;
+     text-transform: uppercase;
+     padding: 0;
+     position: relative;
+     display: inline-block;
+}
+
+.room_details_section .titlepage h2::before {
+     content: '';
+     position: absolute;
+     left: 0;
+     bottom: -10px;
+     width: 60px;
+     height: 3px;
+     background-color: #ff0909;
+}
+
+.room_details_section .titlepage p {
+     color: #666666;
+     font-size: 16px;
+     margin-top: 10px;
+}
+
+.room_details_section .room_img {
+     text-align: center;
+     margin-bottom: 30px;
+}
+
+.room_details_section .room_img figure {
+     margin: 0;
+     border: #dddddd solid 1px;
+     padding: 5px;
+     border-radius: 6px;
+     display: inline-block;
+     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.room_details_section .room_img figure img {
+     max-width: 100%;
+     height: auto;
+     border-radius: 4px;
+     display: block;
+}
+
+.room_details_section .bed_room {
+     background-color: #f9f9f9;
+     padding: 30px;
+     border-radius: 6px;
+     border: #eeeeee solid 1px;
+}
+
+.room_details_section .bed_room h3 {
+     color: #111111;
+     font-size: 28px;
+     font-weight: 700;
+     margin-bottom: 15px;
+     padding-bottom: 15px;
+     border-bottom: #ff0909 solid 2px;
+     display: inline-block;
+}
+
+.room_details_section .room_price {
+     margin: 20px 0;
+}
+
+.room_details_section .room_price .price {
+     color: #ff0909;
+     font-size: 24px;
+     font-weight: 700;
+     font-family: 'Rajdhani', sans-serif;
+}
+
+.room_details_section .bed_room p {
+     color: #666666;
+     font-size: 15px;
+     line-height: 26px;
+     margin-bottom: 20px;
+}
+
+.room_details_section .room_features {
+     margin: 25px 0;
+}
+
+.room_details_section .room_features li {
+     color: #555555;
+     font-size: 15px;
+     margin-bottom: 10px;
+     display: flex;
+     align-items: center;
+}
+
+.room_details_section .room_features li i {
+     color: #ff0909;
+     font-size: 18px;
+     margin-right: 12px;
+     width: 20px;
+     text-align: center;
+}
+
+.room_details_section .bed_room .btn.btn-primary {
+     background-color: #ff0909;
+     border: none;
+     color: #fff;
+     padding: 12px 30px;
+     font-size: 15px;
+     font-weight: 600;
+     text-transform: uppercase;
+     border-radius: 4px;
+     display: inline-block;
+     margin-top: 10px;
+}
+
+.room_details_section .bed_room .btn.btn-primary:hover {
+     background-color: #111111;
+     color: #fff;
+}
+
+@media (max-width: 767px) {
+     .room_details_section {
+          padding: 60px 0 40px 0;
+     }
+     .room_details_section .titlepage h2 {
+          font-size: 28px;
+     }
+     .room_details_section .bed_room h3 {
+          font-size: 22px;
+     }
+     .room_details_section .bed_room {
+          padding: 20px;
+     }
+}
+

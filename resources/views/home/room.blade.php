@@ -18,7 +18,7 @@
                     <div class="bed_room">
                         <h3>{{ $r->room_title }}</h3>
                         <p>{{ \Illuminate\Support\Str::limit($r->description, 80) }}</p>
-                        <a href="#" class="btn btn-primary">Room Details</a>
+                        <a href="{{ route('room_details', $r->id) }}" class="btn btn-primary">Room Details</a>
                     </div>
                 </div>
             </div>
