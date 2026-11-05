@@ -50,6 +50,44 @@
                     </div>
                 </div>
             </div>
+            <!-- Booking Form -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="book_room">
+                        <h1>Book This Room</h1>
+                        <form class="add_booking" method="POST" action="{{ route('book_room') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span>Name</span>
+                                    <input class="online_book" type="text" name="name" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <span>Email</span>
+                                    <input class="online_book" type="email" name="email" placeholder="Your Email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <span>Contact Number</span>
+                                    <input class="online_book" type="text" name="contact_number" placeholder="Your Contact Number" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <span>Booking Start Date</span>
+                                    <img class="date_cua" src="{{ asset('images/date.png') }}">
+                                    <input class="online_book" type="date" name="start_date" min="{{ date('Y-m-d') }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <span>Booking End Date</span>
+                                    <img class="date_cua" src="{{ asset('images/date.png') }}">
+                                    <input class="online_book" type="date" name="end_date" min="{{ date('Y-m-d') }}" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="book_btn" type="submit">Book Now</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <!-- end room details -->
