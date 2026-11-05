@@ -19,5 +19,6 @@
                     <li><a href="{{ url('view_room') }}">View Rooms</a></li>
                 </ul>
             </li>
+            <li><a href="{{ route('view_bookings') }}"> <i class="icon-windows"></i>Bookings </a></li>
         </ul>
     </nav>

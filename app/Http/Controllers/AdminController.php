@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Room;
+use App\Models\Booking;
 
 class AdminController extends Controller
 {
@@ -141,5 +142,11 @@ class AdminController extends Controller
         $room->save();
 
         return redirect()->route('view_room')->with('success', 'Room updated successfully.');
+    }
+
+    public function view_bookings()
+    {
+        $bookings = Booking::with('room')->get();
+        return view('admin.view_bookings', compact('bookings'));
     }
 }

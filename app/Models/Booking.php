@@ -18,4 +18,9 @@ class Booking extends Model
         'end_date',
         'status',
     ];
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }
