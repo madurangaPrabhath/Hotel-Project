@@ -23,4 +23,4 @@ Route::post('/update_room/{id}', [AdminController::class, 'update_room'])->name(
 
 Route::get('/room_details/{id}', [HomeController::class, 'room_details'])->name('room_details');
 
-Route::post('/add_booking', [HomeController::class, 'add_booking']);
+Route::post('/add_booking/{id}', [HomeController::class, 'add_booking'])->name('book_room');

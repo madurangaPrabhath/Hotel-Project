@@ -21,6 +21,12 @@
     <!-- room details -->
     <section class="room_details_section">
         <div class="container">
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
             <div class="titlepage">
                 <h2>Room Details</h2>
                 <p>{{ $room->room_title }}</p>
@@ -55,20 +61,20 @@
                 <div class="col-md-12">
                     <div class="book_room">
                         <h1>Book This Room</h1>
-                        <form class="add_booking" method="POST" action="{{ route('book_room') }}">
+                        <form class="add_booking" method="POST" action="{{ route('book_room', $room->id) }}">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <span>Name</span>
-                                    <input class="online_book" type="text" name="name" placeholder="Your Name" required>
+                                    <input class="online_book" type="text" name="name" placeholder="Your Name" value="{{ auth()->check() ? auth()->user()->name : '' }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <span>Email</span>
-                                    <input class="online_book" type="email" name="email" placeholder="Your Email" required>
+                                    <input class="online_book" type="email" name="email" placeholder="Your Email" value="{{ auth()->check() ? auth()->user()->email : '' }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <span>Contact Number</span>
-                                    <input class="online_book" type="text" name="contact_number" placeholder="Your Contact Number" required>
+                                    <input class="online_book" type="text" name="contact_number" placeholder="Your Contact Number" value="{{ auth()->check() ? auth()->user()->phone : '' }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <span>Booking Start Date</span>
