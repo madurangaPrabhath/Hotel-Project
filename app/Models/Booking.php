@@ -15,6 +15,7 @@ class Booking extends Model
         'email',
         'contact_number',
         'start_date',
-        'end_date'
+        'end_date',
+        'status',
     ];
 }

@@ -52,6 +52,7 @@ class HomeController extends Controller
             $booking->contact_number = $request->input('contact_number');
             $booking->start_date = $request->input('start_date');
             $booking->end_date = $request->input('end_date');
+            $booking->status = 'pending';
             $booking->save();
         } catch (\Throwable $e) {
             return redirect()->back()->with('error', 'Failed to create booking. Please try again.');
