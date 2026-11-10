@@ -28,7 +28,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Image</th>
                                 <th>Room</th>
+                                <th>Price</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Contact</th>
@@ -41,7 +43,15 @@
                             @forelse($bookings as $booking)
                                 <tr>
                                     <td>{{ $booking->id }}</td>
+                                    <td>
+                                        @if($booking->room && $booking->room->image && file_exists(public_path($booking->room->image)))
+                                            <img src="{{ asset($booking->room->image) }}" alt="{{ $booking->room->room_title }}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;">
+                                        @else
+                                            <span class="text-muted small">No image</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $booking->room->room_title ?? $booking->room_id }}</td>
+                                    <td>${{ $booking->room->price ?? '-' }}</td>
                                     <td>{{ $booking->name }}</td>
                                     <td>{{ $booking->email }}</td>
                                     <td>{{ $booking->contact_number }}</td>
@@ -51,7 +61,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center">No bookings found.</td>
+                                    <td colspan="10" class="text-center">No bookings found.</td>
                                 </tr>
                             @endforelse
                         </tbody>
