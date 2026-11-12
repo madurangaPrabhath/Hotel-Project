@@ -197,4 +197,9 @@ class AdminController extends Controller
         $bookings = Booking::with('room')->get();
         return view('admin.view_bookings', compact('bookings'));
     }
+
+    public function view_gallaries()
+    {
+        return view('admin.view_gallaries');
+    }
 }

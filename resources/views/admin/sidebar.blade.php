@@ -20,5 +20,7 @@
                 </ul>
             </li>
             <li><a href="{{ route('view_bookings') }}"> <i class="icon-windows"></i>Bookings </a></li>
+            <li><a href="{{ route('view_gallaries') }}"> <i class="icon-windows"></i>Galleries </a></li>
+        </ul>
         </ul>
     </nav>
