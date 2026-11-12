@@ -28,21 +28,30 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Image</th>
                                 <th>Room</th>
-                                <th>Price</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Contact</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Status</th>
+                                <th>Price</th>
+                                <th>Image</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($bookings as $booking)
                                 <tr>
                                     <td>{{ $booking->id }}</td>
+                                    <td>{{ $booking->room->room_title ?? $booking->room_id }}</td>
+                                    <td>{{ $booking->name }}</td>
+                                    <td>{{ $booking->email }}</td>
+                                    <td>{{ $booking->contact_number }}</td>
+                                    <td>{{ $booking->start_date }}</td>
+                                    <td>{{ $booking->end_date }}</td>
+                                    <td>{{ $booking->status }}</td>
+                                    <td>${{ $booking->room->price ?? '-' }}</td>
                                     <td>
                                         @if($booking->room && $booking->room->image && file_exists(public_path($booking->room->image)))
                                             <img src="{{ asset($booking->room->image) }}" alt="{{ $booking->room->room_title }}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;">
@@ -50,18 +59,17 @@
                                             <span class="text-muted small">No image</span>
                                         @endif
                                     </td>
-                                    <td>{{ $booking->room->room_title ?? $booking->room_id }}</td>
-                                    <td>${{ $booking->room->price ?? '-' }}</td>
-                                    <td>{{ $booking->name }}</td>
-                                    <td>{{ $booking->email }}</td>
-                                    <td>{{ $booking->contact_number }}</td>
-                                    <td>{{ $booking->start_date }}</td>
-                                    <td>{{ $booking->end_date }}</td>
-                                    <td>{{ $booking->status }}</td>
+                                    <td>
+                                        <form action="{{ route('delete_booking', $booking->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this booking?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="10" class="text-center">No bookings found.</td>
+                                    <td colspan="11" class="text-center">No bookings found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

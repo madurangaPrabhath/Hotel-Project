@@ -144,6 +144,18 @@ class AdminController extends Controller
         return redirect()->route('view_room')->with('success', 'Room updated successfully.');
     }
 
+    public function delete_booking(int $id)
+    {
+        $booking = Booking::find($id);
+
+        if ($booking) {
+            $booking->delete();
+            return redirect()->back()->with('success', 'Booking deleted successfully.');
+        }
+
+        return redirect()->back()->with('error', 'Booking not found.');
+    }
+
     public function view_bookings()
     {
         $bookings = Booking::with('room')->get();
