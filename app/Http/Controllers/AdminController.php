@@ -156,6 +156,42 @@ class AdminController extends Controller
         return redirect()->back()->with('error', 'Booking not found.');
     }
 
+    public function approve_booking(int $id)
+    {
+        $booking = Booking::find($id);
+
+        if (!$booking) {
+            return redirect()->back()->with('error', 'Booking not found.');
+        }
+
+        if ($booking->status !== 'pending') {
+            return redirect()->back()->with('error', 'Only pending bookings can be approved.');
+        }
+
+        $booking->status = 'approved';
+        $booking->save();
+
+        return redirect()->back()->with('success', 'Booking approved successfully.');
+    }
+
+    public function reject_booking(int $id)
+    {
+        $booking = Booking::find($id);
+
+        if (!$booking) {
+            return redirect()->back()->with('error', 'Booking not found.');
+        }
+
+        if ($booking->status !== 'pending') {
+            return redirect()->back()->with('error', 'Only pending bookings can be rejected.');
+        }
+
+        $booking->status = 'rejected';
+        $booking->save();
+
+        return redirect()->back()->with('success', 'Booking rejected successfully.');
+    }
+
     public function view_bookings()
     {
         $bookings = Booking::with('room')->get();

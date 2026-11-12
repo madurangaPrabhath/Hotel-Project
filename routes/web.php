@@ -18,6 +18,8 @@ Route::post('/add_room', [AdminController::class, 'add_room']);
 Route::get('/view_room', [AdminController::class, 'view_room'])->name('view_room');
 Route::get('/view_bookings', [AdminController::class, 'view_bookings'])->name('view_bookings');
 Route::delete('/delete_booking/{id}', [AdminController::class, 'delete_booking'])->name('delete_booking');
+Route::post('/approve_booking/{id}', [AdminController::class, 'approve_booking'])->name('approve_booking');
+Route::post('/reject_booking/{id}', [AdminController::class, 'reject_booking'])->name('reject_booking');
 
 Route::delete('/delete_room/{id}', [AdminController::class, 'delete_room'])->name('delete_room');
 

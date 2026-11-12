@@ -50,7 +50,12 @@
                                     <td>{{ $booking->contact_number }}</td>
                                     <td>{{ $booking->start_date }}</td>
                                     <td>{{ $booking->end_date }}</td>
-                                    <td>{{ $booking->status }}</td>
+                                    <td>
+                                        @php
+                                            $statusBadge = $booking->status === 'approved' ? 'badge-success' : ($booking->status === 'rejected' ? 'badge-danger' : 'badge-warning');
+                                        @endphp
+                                        <span class="badge {{ $statusBadge }}">{{ ucfirst($booking->status) }}</span>
+                                    </td>
                                     <td>${{ $booking->room->price ?? '-' }}</td>
                                     <td>
                                         @if($booking->room && $booking->room->image && file_exists(public_path($booking->room->image)))
@@ -65,6 +70,17 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                         </form>
+
+                                        @if($booking->status === 'pending')
+                                            <form action="{{ route('approve_booking', $booking->id) }}" method="POST" style="display:inline; margin-left: 2px;" onsubmit="return confirm('Are you sure you want to approve this booking?')">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                                            </form>
+                                            <form action="{{ route('reject_booking', $booking->id) }}" method="POST" style="display:inline; margin-left: 2px;" onsubmit="return confirm('Are you sure you want to reject this booking?')">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-warning">Reject</button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
